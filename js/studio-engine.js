@@ -660,7 +660,7 @@ const computedGlassStyle = computed(() => ({
       setTimeout(() => {
         glassTarget.style.transition = '';
       }, 400);
-      showToast('玻璃已复位至中心');
+      // silent reset
     });
   }
 

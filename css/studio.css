@@ -867,16 +867,9 @@ input:focus-visible,
 
 .card-glass-footer {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   width: 100%;
-}
-.card-quick-meta {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.7);
 }
 .card-action-btn {
   display: flex;
