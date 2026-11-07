@@ -538,7 +538,7 @@ const computedGlassStyle = computed(() => ({
 
     // 2. Update Card Meta text
     if (cardMetaText) {
-      cardMetaText.textContent = `#${state.preset} · ${state.blur}px / ${state.saturate}%`;
+      cardMetaText.textContent = `Blur ${state.blur}px · Sat ${state.saturate}%`;
     }
 
     // 3. Update Compass Dial needle
