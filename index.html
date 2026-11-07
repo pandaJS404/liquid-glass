@@ -207,7 +207,7 @@
         <div class="stage-underlay-calibration" id="stage-underlay" aria-hidden="true">
           <div class="underlay-grid-matrix">
             <span class="grid-coord">X: 1280 · Y: 720</span>
-            <span class="grid-coord">OPTICAL REFRACTION MATRIX</span>
+            <span class="grid-coord">REFRACTION MATRIX</span>
           </div>
           <div class="underlay-headline">OPTICAL REFRACTION</div>
           <div class="underlay-spectrum-bar">
@@ -239,13 +239,10 @@
                   </div>
                   <div class="card-app-meta">
                     <span class="card-app-name">Spatial Display</span>
-                    <span class="card-app-status">4K · 120Hz Ultra</span>
+                    <span class="card-app-status">4K · 120Hz</span>
                   </div>
                 </div>
-                <div class="card-live-pill">
-                  <span class="card-live-dot"></span>
-                  <span id="card-meta-text">Blur 4px · Sat 140%</span>
-                </div>
+                <div class="card-live-dot" title="活跃连接"></div>
               </div>
 
               <div class="card-glass-body">
@@ -284,18 +281,18 @@
 
             <!-- Carrier 3: macOS Fisheye Dock (Apple Vector Icon Suite) -->
             <div class="carrier-view view-dock" id="carrier-dock">
-              <div class="dock-icon-item dock-app-finder" data-name="访达" title="访达 (Finder)">
+              <div class="dock-icon-item dock-app-finder" data-name="访达" title="访达">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 8 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"></path>
                 </svg>
               </div>
-              <div class="dock-icon-item dock-app-safari" data-name="Safari" title="Safari 浏览器">
+              <div class="dock-icon-item dock-app-safari" data-name="Safari" title="Safari">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <circle cx="12" cy="12" r="10"></circle>
                   <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" fill="currentColor"></polygon>
                 </svg>
               </div>
-              <div class="dock-icon-item dock-app-messages" data-name="信息" title="信息 (Messages)">
+              <div class="dock-icon-item dock-app-messages" data-name="信息" title="信息">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path>
                 </svg>
@@ -314,7 +311,7 @@
                   <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path>
                 </svg>
               </div>
-              <div class="dock-icon-item dock-app-settings" data-name="设置" title="系统设置 (System Settings)">
+              <div class="dock-icon-item dock-app-settings" data-name="设置" title="系统设置">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
                   <circle cx="12" cy="12" r="3"></circle>
@@ -326,7 +323,7 @@
             <div class="carrier-view view-spotlight" id="carrier-spotlight">
               <div class="spotlight-input-row">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-                <div class="spotlight-fake-input">聚焦搜索 (Spotlight)...</div>
+                <div class="spotlight-fake-input">聚焦搜索...</div>
                 <kbd style="font-family: inherit; font-size: 11px; padding: 2px 6px; border-radius: 6px; background: rgba(255,255,255,0.12);">⌘K</kbd>
               </div>
               <div class="spotlight-results-list">
@@ -485,7 +482,7 @@
           <div class="slider-group">
             <div class="slider-row">
               <div class="slider-label-row">
-                <span>模糊 (Blur)</span>
+                <span>模糊</span>
                 <span class="slider-val-badge" id="val-blur">4px</span>
               </div>
               <input type="range" class="control-range" id="sl-blur" min="4" max="64" step="1" value="4">
@@ -493,7 +490,7 @@
 
             <div class="slider-row">
               <div class="slider-label-row">
-                <span>饱和度 (Saturate)</span>
+                <span>饱和度</span>
                 <span class="slider-val-badge" id="val-saturate">140%</span>
               </div>
               <input type="range" class="control-range" id="sl-saturate" min="100" max="250" step="5" value="140">
@@ -501,7 +498,7 @@
 
             <div class="slider-row">
               <div class="slider-label-row">
-                <span>亮度补偿 (Brightness)</span>
+                <span>亮度</span>
                 <span class="slider-val-badge" id="val-brightness">1.06</span>
               </div>
               <input type="range" class="control-range" id="sl-brightness" min="0.80" max="1.30" step="0.01" value="1.06">
@@ -509,7 +506,7 @@
 
             <div class="slider-row">
               <div class="slider-label-row">
-                <span>边缘反差 (Contrast)</span>
+                <span>对比度</span>
                 <span class="slider-val-badge" id="val-contrast">1.08</span>
               </div>
               <input type="range" class="control-range" id="sl-contrast" min="0.90" max="1.25" step="0.01" value="1.08">
@@ -523,7 +520,7 @@
           <div class="slider-group">
             <div class="slider-row">
               <div class="slider-label-row">
-                <span>底板透明度 (Fill Alpha)</span>
+                <span>不透明度</span>
                 <span class="slider-val-badge" id="val-fill-alpha">4%</span>
               </div>
               <input type="range" class="control-range" id="sl-fill-alpha" min="2" max="50" step="1" value="4">
@@ -531,7 +528,7 @@
 
             <div class="slider-row">
               <div class="slider-label-row">
-                <span>边缘光刃 (Specular Rim)</span>
+                <span>边缘高光</span>
                 <span class="slider-val-badge" id="val-rim-depth">1.8px</span>
               </div>
               <input type="range" class="control-range" id="sl-rim-depth" min="0.5" max="4.0" step="0.1" value="1.8">
@@ -539,7 +536,7 @@
 
             <div class="slider-row">
               <div class="slider-label-row">
-                <span>深层折射 (Deep Volume)</span>
+                <span>体折射</span>
                 <span class="slider-val-badge" id="val-deep-bloom">18px</span>
               </div>
               <input type="range" class="control-range" id="sl-deep-bloom" min="10" max="70" step="2" value="18">
@@ -547,7 +544,7 @@
 
             <div class="slider-row">
               <div class="slider-label-row">
-                <span>光源角度 (Light Angle)</span>
+                <span>光照角度</span>
                 <span class="slider-val-badge" id="val-light-angle">145°</span>
               </div>
               <input type="range" class="control-range" id="sl-light-angle" min="0" max="360" step="1" value="145">
@@ -555,7 +552,7 @@
 
             <div class="slider-row">
               <div class="slider-label-row">
-                <span>扩散角度 (Conic Spread)</span>
+                <span>高光扩散</span>
                 <span class="slider-val-badge" id="val-conic-spread">60°</span>
               </div>
               <input type="range" class="control-range" id="sl-conic-spread" min="20" max="120" step="5" value="60">
@@ -569,7 +566,7 @@
           <div class="slider-group">
             <div class="slider-row">
               <div class="slider-label-row">
-                <span>平滑圆角 (Squircle Radius)</span>
+                <span>圆角半径</span>
                 <span class="slider-val-badge" id="val-squircle-radius">28px</span>
               </div>
               <input type="range" class="control-range" id="sl-squircle-radius" min="8" max="64" step="1" value="28">
@@ -595,11 +592,11 @@
           <div class="config-section-title">无障碍模拟</div>
           <div class="a11y-toggles-row">
             <label class="toggle-label">
-              <span>Reduce Transparency (减少透明度)</span>
+              <span>减少透明度</span>
               <input type="checkbox" id="chk-test-transparency">
             </label>
             <label class="toggle-label">
-              <span>Reduce Motion (减少动态效果)</span>
+              <span>减少动态效果</span>
               <input type="checkbox" id="chk-test-motion">
             </label>
           </div>
