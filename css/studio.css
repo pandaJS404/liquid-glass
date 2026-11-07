@@ -1918,52 +1918,37 @@ input[type="range"].control-range::-webkit-slider-thumb:hover {
     white-space: nowrap;
   }
 
-  /* Stage Toolbar Stacks Cleanly */
+  /* Stage Toolbar Responsive 2-Row Layout */
   .stage-tools-bar {
-    padding: 10px 14px;
-    flex-direction: column;
-    align-items: stretch;
+    padding: 8px 12px;
+    flex-wrap: wrap;
+    justify-content: space-between;
     gap: 8px;
   }
-  .stage-tools-group:first-child {
+  .stage-mode-capsule {
+    order: 1;
     width: 100%;
     justify-content: space-between;
+    padding: 4px 8px;
   }
-  .stage-pill {
-    padding: 4px 10px;
-    font-size: 11px;
-    display: none;
-  }
-  .mode-switch-group {
+  .stage-mode-capsule .mode-switch-group {
     flex: 1;
     display: flex;
   }
-  .mode-btn {
+  .stage-mode-capsule .mode-btn {
     flex: 1;
-    padding: 6px 4px;
-    font-size: 11px;
     text-align: center;
-    white-space: nowrap;
+    padding: 4px 6px;
   }
-
-  /* Secondary Toolbar Row */
-  .stage-tools-group:last-child {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .wallpaper-palette-pill {
+  .wallpaper-pills {
+    order: 2;
     padding: 4px 8px;
     gap: 6px;
   }
-  .wallpaper-dot {
-    width: 20px;
-    height: 20px;
-  }
-  .hud-toggle-label {
-    padding: 4px 10px;
-    font-size: 11px;
+  .stage-lighting-capsule {
+    order: 3;
+    padding: 4px 8px;
+    gap: 8px;
   }
 
   /* Central Stage & Master Glass Box */

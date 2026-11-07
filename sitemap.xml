@@ -1,19 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://apple-liquid-glass.github.io/liquid-glass-studio/</loc>
+    <loc>https://pandaJS404.github.io/liquid-glass/</loc>
     <lastmod>2026-11-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <image:image>
-      <image:loc>https://apple-liquid-glass.github.io/liquid-glass-studio/assets/og-preview.png</image:loc>
-      <image:title>Apple Liquid Glass Studio Overview</image:title>
-      <image:caption>Apple HIG WWDC25 Liquid Glass Optical Calibration System</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://apple-liquid-glass.github.io/liquid-glass-studio/assets/icon.svg</image:loc>
-      <image:title>Apple Liquid Glass Studio App Icon</image:title>
-    </image:image>
   </url>
 </urlset>

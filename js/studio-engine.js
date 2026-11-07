@@ -928,8 +928,8 @@ const computedGlassStyle = computed(() => ({
     const btnReset = document.getElementById('btn-reset');
     if (btnReset) {
       btnReset.addEventListener('click', () => {
-        const def = MATERIAL_PRESETS.prismatic;
-        state.preset = 'prismatic';
+        const def = MATERIAL_PRESETS.clear;
+        state.preset = 'clear';
         state.blur = def.blur;
         state.saturate = def.saturate;
         state.brightness = def.brightness;

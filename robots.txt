@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://apple-liquid-glass.github.io/liquid-glass-studio/sitemap.xml
+Sitemap: https://pandaJS404.github.io/liquid-glass/sitemap.xml
