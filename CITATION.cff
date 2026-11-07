@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use Apple Liquid Glass Studio in your research or design engineering projects, please cite it as below."
+authors:
+  - name: "Apple Liquid Glass Fusion Team"
+title: "Apple Liquid Glass Studio: Physics-Based Optical Calibration & Multi-Carrier System"
+version: 1.0.0
+date-released: 2026-11-06
+url: "https://apple-liquid-glass.github.io/liquid-glass-studio/"
+repository-code: "https://github.com/apple-liquid-glass/liquid-glass-studio"
+keywords:
+  - "liquid-glass"
+  - "apple-hig"
+  - "wwdc25"
+  - "glassmorphism"
+  - "zero-layout-shift"
+  - "css-filters"
+license: MIT

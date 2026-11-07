@@ -1,0 +1,79 @@
+name: CI & Integrity Assurance
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  verify:
+    name: Code & Asset Integrity Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Audit File Encoding & Asset Integrity
+        run: |
+          python -c "
+          import os, sys
+
+          # 1. Verify required files exist
+          required = [
+              'index.html',
+              'css/studio.css',
+              'js/studio-engine.js',
+              'site.webmanifest',
+              'robots.txt',
+              'sitemap.xml',
+              'assets/icon.svg',
+              'assets/og-preview.png'
+          ]
+          missing = [f for f in required if not os.path.exists(f)]
+          if missing:
+              print('Missing critical files:', missing)
+              sys.exit(1)
+
+          # 2. Check UTF-8 validity
+          checked_count = 0
+          for root, dirs, files in os.walk('.'):
+              if '.git' in root: continue
+              for file in files:
+                  if file.endswith(('.html', '.js', '.css', '.md', '.json', '.xml', '.yml', '.webmanifest')):
+                      path = os.path.join(root, file)
+                      try:
+                          with open(path, 'r', encoding='utf-8') as f:
+                              f.read()
+                          checked_count += 1
+                      except Exception as e:
+                          print(f'UTF-8 Decode Error in {path}: {e}')
+                          sys.exit(1)
+
+          print(f'Successfully audited {checked_count} text files for UTF-8 compliance.')
+          "
+
+      - name: Validate Local Asset Link Integrity
+        run: |
+          python -c "
+          import re, sys, os
+          with open('index.html', 'r', encoding='utf-8') as f:
+              html = f.read()
+
+          links = re.findall(r'(?:src|href)=\"([^\"]+)\"', html)
+          for link in links:
+              if link.startswith(('http://', 'https://', '#', 'mailto:', 'data:')):
+                  continue
+              clean_path = link.lstrip('./')
+              if not os.path.exists(clean_path):
+                  print(f'Dead link detected in index.html: {link} -> {clean_path}')
+                  sys.exit(1)
+
+          print('All asset links in index.html verified successfully.')
+          "

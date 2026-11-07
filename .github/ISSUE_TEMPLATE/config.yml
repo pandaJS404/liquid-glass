@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: GitHub Discussions
+    url: https://github.com/apple-liquid-glass/liquid-glass-studio/discussions
+    about: 欢迎在讨论区交流液态玻璃设计规范、参数调平经验或展示基于此系统构建的界面。
+  - name: 安全漏洞反馈 (Security Policy)
+    url: https://github.com/apple-liquid-glass/liquid-glass-studio/security/policy
+    about: 发现安全漏洞或敏感问题？请参考我们的安全策略进行负责任的披露。

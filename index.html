@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  
+  <!-- Primary SEO Meta Tags (GitHub Pages Optimized) -->
+  <title>Apple Liquid Glass Studio - 苹果级液态玻璃调平校验系统</title>
+  <meta name="title" content="Apple Liquid Glass Studio - 苹果级液态玻璃调平校验系统">
+  <meta name="description" content="基于 Apple HIG 官方人机交互指南与 WWDC25 标准的液态玻璃光学仿真与代码生成器。提供三步调平重校准、零位移四层物理内阴影、动态光刃游走、6 大核心物理材质与多端生产代码实时导出。">
+  <meta name="keywords" content="liquid glass, 液态玻璃, apple hig, wwdc25, glassmorphism, 9elements, css, tailwind, react, vue, design tokens">
+  <meta name="author" content="Apple Liquid Glass Fusion Team">
+  <meta name="robots" content="index, follow">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://apple-liquid-glass.github.io/liquid-glass-studio/">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://apple-liquid-glass.github.io/liquid-glass-studio/">
+  <meta property="og:title" content="Apple Liquid Glass Studio - 苹果级液态玻璃调平校验系统">
+  <meta property="og:description" content="全维度调校苹果级液态玻璃光学特性：三步调平滤波、零位移内阴影、光刃游走，支持灵动岛、Dock、Spotlight等多载体实时仿真。">
+  <meta property="og:image" content="https://apple-liquid-glass.github.io/liquid-glass-studio/assets/og-preview.png">
+  <meta property="og:image:secure_url" content="https://apple-liquid-glass.github.io/liquid-glass-studio/assets/og-preview.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Apple Liquid Glass Studio Preview">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://apple-liquid-glass.github.io/liquid-glass-studio/">
+  <meta property="twitter:title" content="Apple Liquid Glass Studio - 苹果级液态玻璃调平校验系统">
+  <meta property="twitter:description" content="零位移内阴影与三步调平重校准，发丝级锥形动态光刃，支持折叠面板与 Tab 标签多端代码导出。">
+  <meta property="twitter:image" content="https://apple-liquid-glass.github.io/liquid-glass-studio/assets/og-preview.png">
+  <meta property="twitter:image:alt" content="Apple Liquid Glass Studio Preview">
+
+  <!-- Structured Data (JSON-LD) for SEO Rich Snippets -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Apple Liquid Glass Studio",
+    "alternateName": "苹果级液态玻璃调平系统",
+    "url": "https://apple-liquid-glass.github.io/liquid-glass-studio/",
+    "image": "https://apple-liquid-glass.github.io/liquid-glass-studio/assets/og-preview.png",
+    "screenshot": "https://apple-liquid-glass.github.io/liquid-glass-studio/assets/screenshots/studio-overview.png",
+    "description": "基于 Apple HIG 规范的液态玻璃物理光学调平工具与多端生产代码生成器",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All",
+    "author": {
+      "@type": "Organization",
+      "name": "Apple Liquid Glass Fusion Team"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "featureList": [
+      "Luminosity Re-leveling",
+      "Zero Layout Shift 4-Layer Inset Shadow",
+      "Dynamic Traveling Conic Specular Highlight",
+      "7 Apple HIG Carrier Components",
+      "6 Physical Material Presets",
+      "Multi-format Code Export (CSS, Tailwind, React, Tokens)"
+    ]
+  }
+  </script>
+
+  <!-- PWA & Mobile Web App Capabilities -->
+  <meta name="theme-color" content="#07090e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Liquid Glass Studio">
+  <link rel="manifest" href="./site.webmanifest">
+  <link rel="icon" type="image/svg+xml" href="./assets/icon.svg">
+  <link rel="apple-touch-icon" href="./assets/icon.svg">
+
+  <!-- Master Stylesheet -->
+  <link rel="stylesheet" href="./css/studio.css">
+</head>
+<body>
+
+  <!-- Top Navigation Header (HIG Liquid Glass Bar) -->
+  <header class="site-header">
+    <div class="brand">
+      <div class="brand-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+        </svg>
+      </div>
+      <div class="brand-title">
+        <span>Liquid Glass Studio</span>
+        <span class="brand-badge">WWDC25 HIG</span>
+      </div>
+    </div>
+
+    <!-- Carrier Switcher (7 HIG Components) -->
+    <div class="header-carrier-tabs" role="tablist" aria-label="组件载体选择">
+      <button type="button" class="carrier-tab-btn active" data-carrier="card" role="tab" title="展示核心玻璃卡片">
+        <span class="carrier-label">玻璃卡片</span>
+      </button>
+      <button type="button" class="carrier-tab-btn" data-carrier="island" role="tab" title="展示灵动岛交互">
+        <span class="carrier-label">灵动岛</span>
+      </button>
+      <button type="button" class="carrier-tab-btn" data-carrier="dock" role="tab" title="展示 macOS 鱼眼放大 Dock 栏">
+        <span class="carrier-label">鱼眼 Dock</span>
+      </button>
+      <button type="button" class="carrier-tab-btn" data-carrier="spotlight" role="tab" title="展示聚焦全局搜索栏">
+        <span class="carrier-label">聚焦搜索</span>
+      </button>
+      <button type="button" class="carrier-tab-btn" data-carrier="segmented" role="tab" title="展示液态滑块分段选择器">
+        <span class="carrier-label">分段选择</span>
+      </button>
+      <button type="button" class="carrier-tab-btn" data-carrier="buttons" role="tab" title="展示多态液态按钮套件">
+        <span class="carrier-label">按钮套件</span>
+      </button>
+      <button type="button" class="carrier-tab-btn" data-carrier="music" role="tab" title="展示 Apple Music 动态播放微件">
+        <span class="carrier-label">音乐微件</span>
+      </button>
+    </div>
+
+    <!-- Right Header Actions -->
+    <div class="header-actions">
+      <button type="button" class="header-btn" id="btn-reset" title="重置默认">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+          <path d="M3 3v5h5"></path>
+        </svg>
+        <span>重置默认</span>
+      </button>
+      <button type="button" class="header-btn" id="btn-doc" title="规范文档">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="16" x2="12" y2="12"></line>
+          <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </svg>
+        <span>规范文档</span>
+      </button>
+      <button type="button" class="header-btn primary" id="btn-share" title="分享配置">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+        </svg>
+        <span>分享配置</span>
+      </button>
+      <a class="header-icon-btn" href="https://github.com" target="_blank" rel="noopener noreferrer" title="GitHub 仓库">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- Master Studio Workspace Layout -->
+  <main class="app-workspace">
+
+    <!-- Master Dynamic Backdrop Canvas (Flows across Stage & Sidebar) -->
+    <div class="stage-backdrop-canvas" id="stage-backdrop"></div>
+
+    <!-- Left: Optical Canvas & Component Stage -->
+    <section class="stage-container" id="stage-container">
+
+            <!-- Stage Top Floating Controls Bar -->
+      <div class="stage-tools-bar">
+        <!-- Left: Refraction Engine Architecture Capsule -->
+        <div class="stage-glass-pill stage-mode-capsule" role="radiogroup" aria-label="折射渲染架构">
+          <span class="stage-pill-label">折射架构</span>
+          <div class="mode-switch-group">
+            <button type="button" class="mode-btn active" data-mode="A" title="Mode A 原生 DOM 三步调平">原生</button>
+            <button type="button" class="mode-btn" data-mode="B" title="Mode B 真实透镜法线折射">透镜</button>
+            <button type="button" class="mode-btn" data-mode="C" title="Mode C 3通道波长色散">色散</button>
+          </div>
+        </div>
+
+        <!-- Center: Wallpaper Palette Swatches -->
+        <div class="stage-glass-pill wallpaper-pills" role="group" aria-label="底图壁纸切换">
+          <button type="button" class="wp-circle-dot active" data-wall="aurora-pink" title="极光粉紫" style="background: radial-gradient(circle at 30% 30%, #ec4899, #3b82f6 60%, #1e1b4b);"></button>
+          <button type="button" class="wp-circle-dot" data-wall="ocean-blue" title="加州海岸" style="background: radial-gradient(circle at 70% 30%, #06b6d4, #1d4ed8 70%, #030712);"></button>
+          <button type="button" class="wp-circle-dot" data-wall="sunset-amber" title="优胜美地日落" style="background: linear-gradient(135deg, #f43f5e, #fb923c 60%, #451a03);"></button>
+          <button type="button" class="wp-circle-dot" data-wall="cyber-neon" title="赛博霓虹" style="background: radial-gradient(circle at 50% 40%, #d946ef, #6366f1 50%, #000);"></button>
+          <button type="button" class="wp-circle-dot" data-wall="dark-minimal" title="极简深空黑" style="background: #090b10;"></button>
+          <button type="button" class="wp-circle-dot" data-wall="mesh-organic" title="流体空间" style="background: linear-gradient(120deg, #1e293b, #0f172a);"></button>
+        </div>
+
+        <!-- Right: Sun Compass & Pointer Glint Switch Capsule -->
+        <div class="stage-glass-pill stage-lighting-capsule">
+          <div class="compass-dock-item" title="按住拖拽或微调光照入射角">
+            <span class="stage-pill-label">光照</span>
+            <div class="compass-dial-mini" id="compass-dial">
+              <div class="compass-dial-needle" id="compass-needle"></div>
+            </div>
+          </div>
+          <div class="capsule-divider"></div>
+          <label class="stage-switch-item" title="开启/关闭鼠标指针跟随动态光刃">
+            <input type="checkbox" id="chk-pointer-track" checked class="stage-switch-checkbox">
+            <span class="stage-switch-track">
+              <span class="stage-switch-thumb"></span>
+            </span>
+            <span class="stage-switch-text">跟随光刃</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Center Viewport Area (Where Carriers Live) -->
+      <div class="stage-viewport-center" id="stage-viewport">
+
+        <!-- Optical Calibration Underlay (High-contrast typography & spectrum for authentic glass refraction) -->
+        <div class="stage-underlay-calibration" id="stage-underlay" aria-hidden="true">
+          <div class="underlay-headline">LIQUID GLASS</div>
+          <div class="underlay-spectrum-bar">
+            <span style="background:#ff375f"></span>
+            <span style="background:#ff9f0a"></span>
+            <span style="background:#ffd60a"></span>
+            <span style="background:#30d158"></span>
+            <span style="background:#2997ff"></span>
+            <span style="background:#bf5af2"></span>
+          </div>
+          <div class="underlay-subtitle">OPTICAL REFRACTION · WWDC25 HIG</div>
+        </div>
+
+        <div class="generator-stage-wrapper">
+
+          <!-- Liquid Glass Master Carrier Host -->
+          <div class="liquid-glass-master" id="glass-target">
+
+            <!-- Carrier 1: Master Glass Card -->
+            <div class="carrier-view view-card active" id="carrier-card">
+              <div class="card-header-meta">
+                <span class="card-pill-tag">APPLE LIQUID GLASS</span>
+                <span style="font-size: 11px; opacity: 0.8;" id="card-meta-text">#clear · 4px / 140%</span>
+              </div>
+              <div class="card-center-body">
+                <h2 class="card-headline">Apple Liquid Glass</h2>
+                <p class="card-subline">三步调平滤波 · 零位移四层散射内阴影 · 锥形动态光刃</p>
+              </div>
+              <div class="card-footer-meta">
+                <span>Zero Layout Shift</span>
+                <span>WWDC25 HIG Specification</span>
+              </div>
+            </div>
+
+            <!-- Carrier 2: Dynamic Island -->
+            <div class="carrier-view view-island" id="carrier-island">
+              <div class="island-content-row">
+                <div class="island-left">
+                  <div class="island-vinyl"></div>
+                  <div class="island-meta">
+                    <span class="island-title">Get Lucky</span>
+                    <span class="island-sub">Daft Punk · RAM</span>
+                  </div>
+                </div>
+                <div class="island-wave-bars">
+                  <span></span><span></span><span></span><span></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Carrier 3: macOS Fisheye Dock (Apple Vector Icon Suite) -->
+            <div class="carrier-view view-dock" id="carrier-dock">
+              <div class="dock-icon-item dock-app-finder" data-name="访达" title="访达 (Finder)">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 8 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"></path>
+                </svg>
+              </div>
+              <div class="dock-icon-item dock-app-safari" data-name="Safari" title="Safari 浏览器">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" fill="currentColor"></polygon>
+                </svg>
+              </div>
+              <div class="dock-icon-item dock-app-messages" data-name="信息" title="信息 (Messages)">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path>
+                </svg>
+              </div>
+              <div class="dock-icon-item dock-app-music" data-name="音乐" title="Apple Music">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 18V5l12-2v13"></path>
+                  <circle cx="6" cy="18" r="3"></circle>
+                  <circle cx="18" cy="16" r="3"></circle>
+                </svg>
+              </div>
+              <div class="dock-icon-item dock-app-photos" data-name="照片" title="照片 (Photos)">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+                  <circle cx="9" cy="9" r="2"></circle>
+                  <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path>
+                </svg>
+              </div>
+              <div class="dock-icon-item dock-app-settings" data-name="设置" title="系统设置 (System Settings)">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Carrier 4: Spotlight Search -->
+            <div class="carrier-view view-spotlight" id="carrier-spotlight">
+              <div class="spotlight-input-row">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                <div class="spotlight-fake-input">聚焦搜索 (Spotlight)...</div>
+                <kbd style="font-family: inherit; font-size: 11px; padding: 2px 6px; border-radius: 6px; background: rgba(255,255,255,0.12);">⌘K</kbd>
+              </div>
+              <div class="spotlight-results-list">
+                <div class="spotlight-item">
+                  <span class="spotlight-item-label">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                      <polyline points="14 2 14 8 20 8"></polyline>
+                    </svg>
+                    <span>Apple HIG Liquid Glass 官方规范</span>
+                  </span>
+                  <span class="spotlight-item-type">文档</span>
+                </div>
+                <div class="spotlight-item">
+                  <span class="spotlight-item-label">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                    </svg>
+                    <span>Luminosity Re-leveling 三步调平算法</span>
+                  </span>
+                  <span class="spotlight-item-type">算法</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Carrier 5: Segmented Control -->
+            <div class="carrier-view view-segmented" id="carrier-segmented">
+              <div class="seg-track">
+                <button type="button" class="seg-item-btn active">日视图</button>
+                <button type="button" class="seg-item-btn">周视图</button>
+                <button type="button" class="seg-item-btn">月视图</button>
+              </div>
+            </div>
+
+            <!-- Carrier 6: Button Suite -->
+            <div class="carrier-view view-buttons" id="carrier-buttons">
+              <button type="button" class="btn-sample accent">Primary</button>
+              <button type="button" class="btn-sample clear">Clear Pill</button>
+              <button type="button" class="btn-sample danger">Destructive</button>
+            </div>
+
+            <!-- Carrier 7: Music Widget -->
+            <div class="carrier-view view-music" id="carrier-music">
+              <div style="display: flex; gap: 14px; align-items: center; width: 100%;">
+                <div class="music-cover-art"></div>
+                <div class="music-track-info">
+                  <div class="music-track-title">Starboy</div>
+                  <div class="music-track-artist">The Weeknd · Daft Punk</div>
+                  <div class="music-progress-bar">
+                    <div class="music-progress-fill"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <!-- =====================================================================
+           Code Section: HIG Collapsible Accordion Drawer with Tabs
+           ===================================================================== -->
+      <div class="code-accordion-panel" id="code-accordion-panel">
+        
+        <!-- Accordion Header Bar -->
+        <div class="code-accordion-header">
+          <div class="code-header-left">
+            <div class="code-panel-label" id="code-panel-label-badge">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="16 18 22 12 16 6"></polyline>
+                <polyline points="8 6 2 12 8 18"></polyline>
+              </svg>
+              <span>样式代码</span>
+            </div>
+
+            <!-- Format Tabs (CSS, Tailwind, React, Vue, Tokens) -->
+            <div class="code-format-tabs" role="tablist" aria-label="代码格式选择">
+              <button type="button" class="format-tab-btn active" data-format="css" role="tab">CSS 原生</button>
+              <button type="button" class="format-tab-btn" data-format="tailwind" role="tab">Tailwind CSS</button>
+              <button type="button" class="format-tab-btn" data-format="react" role="tab">React JSX</button>
+              <button type="button" class="format-tab-btn" data-format="vue" role="tab">Vue 3</button>
+              <button type="button" class="format-tab-btn" data-format="tokens" role="tab">Tokens</button>
+            </div>
+          </div>
+
+          <!-- Actions: Copy & Fold Chevron -->
+          <div class="code-header-actions">
+            <button type="button" class="code-action-btn primary" id="btn-copy-code" title="复制代码">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span>复制代码</span>
+            </button>
+            <button type="button" class="code-fold-toggle-btn" id="btn-fold-chevron" title="展开/收起代码面板">
+              <span id="fold-status-text">展开</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="18 15 12 9 6 15"></polyline>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Accordion Collapsible Body (Code Display) -->
+        <div class="code-accordion-body" id="code-accordion-body">
+          <pre class="code-pre-block"><code id="code-snippet-pre">/* 实时光学配置计算中... */</code></pre>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Right: Studio Inspector Sidebar -->
+    <aside class="generator-sidebar" role="region" aria-label="参数检查器">
+      <div class="sidebar-scroll-content">
+
+        <!-- Section 1: Official Material Presets -->
+        <section class="sidebar-glass-card">
+          <div class="config-section-title">官方 6 大物理材质体系</div>
+          <div class="preset-grid" role="radiogroup" aria-label="材质预设">
+            <button type="button" class="preset-chip active" data-preset="clear" role="radio" aria-checked="true">
+              <span class="preset-zh">Clear</span>
+              <span class="preset-en">纯透</span>
+            </button>
+
+            <button type="button" class="preset-chip" data-preset="prismatic" role="radio" aria-checked="false">
+              <span class="preset-zh">Prismatic</span>
+              <span class="preset-en">厚棱镜</span>
+            </button>
+
+            <button type="button" class="preset-chip" data-preset="satin" role="radio" aria-checked="false">
+              <span class="preset-zh">Satin</span>
+              <span class="preset-en">缎面</span>
+            </button>
+
+            <button type="button" class="preset-chip" data-preset="tinted" role="radio" aria-checked="false">
+              <span class="preset-zh">Tinted</span>
+              <span class="preset-en">柔彩</span>
+            </button>
+
+            <button type="button" class="preset-chip" data-preset="obsidian" role="radio" aria-checked="false">
+              <span class="preset-zh">Obsidian</span>
+              <span class="preset-en">黑曜</span>
+            </button>
+
+            <button type="button" class="preset-chip" data-preset="gel" role="radio" aria-checked="false">
+              <span class="preset-zh">Gel</span>
+              <span class="preset-en">凝胶</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- Section 2: Luminosity Re-leveling -->
+        <section class="sidebar-glass-card">
+          <div class="config-section-title">苹果三步调平滤波 (WWDC25 HIG)</div>
+          <div class="slider-group">
+            <div class="slider-row">
+              <div class="slider-label-row">
+                <span>高斯模糊散焦 (Blur)</span>
+                <span class="slider-val-badge" id="val-blur">4px</span>
+              </div>
+              <input type="range" class="control-range" id="sl-blur" min="4" max="64" step="1" value="4">
+            </div>
+
+            <div class="slider-row">
+              <div class="slider-label-row">
+                <span>微粒色彩饱和度 (Saturate)</span>
+                <span class="slider-val-badge" id="val-saturate">140%</span>
+              </div>
+              <input type="range" class="control-range" id="sl-saturate" min="100" max="250" step="5" value="140">
+            </div>
+
+            <div class="slider-row">
+              <div class="slider-label-row">
+                <span>暗部通透提亮 (Brightness)</span>
+                <span class="slider-val-badge" id="val-brightness">1.06</span>
+              </div>
+              <input type="range" class="control-range" id="sl-brightness" min="0.80" max="1.30" step="0.01" value="1.06">
+            </div>
+
+            <div class="slider-row">
+              <div class="slider-label-row">
+                <span>晶莹边缘反差 (Contrast)</span>
+                <span class="slider-val-badge" id="val-contrast">1.08</span>
+              </div>
+              <input type="range" class="control-range" id="sl-contrast" min="0.90" max="1.25" step="0.01" value="1.08">
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 3: 4-Layer Inset Scatter Shadows -->
+        <section class="sidebar-glass-card">
+          <div class="config-section-title">零位移四层物理内阴影</div>
+          <div class="slider-group">
+            <div class="slider-row">
+              <div class="slider-label-row">
+                <span>基底透光度 (Fill Alpha)</span>
+                <span class="slider-val-badge" id="val-fill-alpha">4%</span>
+              </div>
+              <input type="range" class="control-range" id="sl-fill-alpha" min="2" max="50" step="1" value="4">
+            </div>
+
+            <div class="slider-row">
+              <div class="slider-label-row">
+                <span>外沿倒角主光刃 (Specular Rim)</span>
+                <span class="slider-val-badge" id="val-rim-depth">1.8px</span>
+              </div>
+              <input type="range" class="control-range" id="sl-rim-depth" min="0.5" max="4.0" step="0.1" value="1.8">
+            </div>
+
+            <div class="slider-row">
+              <div class="slider-label-row">
+                <span>深层体折射流光 (Deep Volume)</span>
+                <span class="slider-val-badge" id="val-deep-bloom">18px</span>
+              </div>
+              <input type="range" class="control-range" id="sl-deep-bloom" min="10" max="70" step="2" value="18">
+            </div>
+
+            <div class="slider-row">
+              <div class="slider-label-row">
+                <span>入射光源角 (Light Angle)</span>
+                <span class="slider-val-badge" id="val-light-angle">145°</span>
+              </div>
+              <input type="range" class="control-range" id="sl-light-angle" min="0" max="360" step="1" value="145">
+            </div>
+
+            <div class="slider-row">
+              <div class="slider-label-row">
+                <span>高光扩散角 (Conic Spread)</span>
+                <span class="slider-val-badge" id="val-conic-spread">60°</span>
+              </div>
+              <input type="range" class="control-range" id="sl-conic-spread" min="20" max="120" step="5" value="60">
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 4: Dimensions & Squircle -->
+        <section class="sidebar-glass-card">
+          <div class="config-section-title">几何与平滑圆角</div>
+          <div class="slider-group">
+            <div class="slider-row">
+              <div class="slider-label-row">
+                <span>Apple 仿生平滑圆角 (Squircle)</span>
+                <span class="slider-val-badge" id="val-squircle-radius">28px</span>
+              </div>
+              <input type="range" class="control-range" id="sl-squircle-radius" min="8" max="64" step="1" value="28">
+            </div>
+
+            <div class="dim-inputs-row">
+              <div class="input-box">
+                <label for="num-width" title="左右拖拽或滚轮可微调">宽</label>
+                <input type="number" id="num-width" min="180" max="960" step="10" value="480" aria-label="卡片宽度">
+                <span class="input-unit">px</span>
+              </div>
+              <div class="input-box">
+                <label for="num-height" title="左右拖拽或滚轮可微调">高</label>
+                <input type="number" id="num-height" min="120" max="680" step="10" value="320" aria-label="卡片高度">
+                <span class="input-unit">px</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 5: Accessibility Simulation -->
+        <section class="sidebar-glass-card">
+          <div class="config-section-title">无障碍与边界仿真 (WCAG 2.2)</div>
+          <div class="a11y-toggles-row">
+            <label class="toggle-label">
+              <span>Reduce Transparency (减少透明度)</span>
+              <input type="checkbox" id="chk-test-transparency">
+            </label>
+            <label class="toggle-label">
+              <span>Reduce Motion (减少动态效果)</span>
+              <input type="checkbox" id="chk-test-motion">
+            </label>
+          </div>
+        </section>
+
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- HIG Specification Modal Sheet -->
+  <div class="modal-overlay" id="modal-spec-overlay">
+    <div class="modal-sheet">
+      <div class="modal-header">
+        <div class="modal-title">Apple 级液态玻璃调平技术要点</div>
+        <button type="button" class="modal-close-btn" id="btn-close-modal">✕</button>
+      </div>
+      <div class="modal-body">
+        <div><strong>1. 苹果三步调平滤波公式</strong></div>
+        <div>传统 <code>backdrop-filter: blur(20px)</code> 会导致背景色彩被稀释发灰。苹果 HIG 规范必须采用三步重校准：<code>blur(24px) saturate(180%) brightness(1.06) contrast(1.04)</code>，分别实现微粒色彩补偿、暗部提亮消除死黑与晶莹边缘反差增强。</div>
+
+        <div><strong>2. 零位移四层物理内阴影法则</strong></div>
+        <div>严禁使用 CSS <code>border: 1px solid</code>，必须使用四层精确内阴影模拟晶莹倒角：主入射光刃、背光面反弹、浅表面微漫射与深层体折射流光。</div>
+
+        <div><strong>3. 容器防直角外露守则 (Anti-Clipping)</strong></div>
+        <div>外部容器的 <code>borderRadius</code> 必须严格与内部剪切路径像素值保持 100% 绝对一致，杜绝内阴影在四周勾勒出 4 个直角尖角。</div>
+
+        <div><strong>4. WCAG 2.2 无障碍边界</strong></div>
+        <div>在系统开启 Reduce Transparency 或 Reduce Motion 时，所有液态玻璃组件自动降级为不透明高对比深色底板（<code>#181b26</code>），关闭高斯模糊，消除 GPU 负担。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Apple HUD Toast Notification -->
+  <div class="toast-notice" id="studio-hud-toast"></div>
+
+  <!-- Dynamic SVG Optical Displacement Lens Defs -->
+  <svg id="liquid-glass-svg-defs" style="position:absolute;width:0;height:0;overflow:hidden;pointer-events:none;" aria-hidden="true"></svg>
+
+  <!-- Master Optical & Interaction Engine -->
+  <script src="./js/studio-engine.js"></script>
+</body>
+</html>

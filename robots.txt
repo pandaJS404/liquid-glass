@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://apple-liquid-glass.github.io/liquid-glass-studio/sitemap.xml

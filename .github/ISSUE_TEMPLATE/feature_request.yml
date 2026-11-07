@@ -1,0 +1,40 @@
+name: 功能与载体需求建议 (Feature Request)
+description: 提出新的 HIG 玻璃载体、物理光学参数或代码导出格式建议
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢为 Apple Liquid Glass Studio 提出改进建议！请尽量提供清晰的 Apple HIG 规范依据或使用场景。
+  - type: dropdown
+    id: category
+    attributes:
+      label: 需求类型
+      options:
+        - 新 HIG 组件载体 (New Carrier: 如弹窗、通知横幅、控制中心面板等)
+        - 物理光学参数增强 (Optical Optics: 如三步调平范围、光刃计算等)
+        - 多端代码导出 (Code Generation: 如 SwiftUI、Svelte、WebComponent 等)
+        - 无障碍与跨端渲染 (Accessibility & Cross-browser)
+        - 其他改进
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: 需求描述与使用场景
+      description: 清楚地描述期望的新功能，以及解决的具体设计或工程问题。
+      placeholder: 例如：希望新增符合 WWDC25 规范的 macOS 菜单栏下拉微件载体...
+    validations:
+      required: true
+  - type: textarea
+    id: hig-reference
+    attributes:
+      label: Apple HIG / 设计规范参考
+      description: 是否有官方 HIG 链接、WWDC 会议片段或设计图解作为参考依据？
+      placeholder: Apple Human Interface Guidelines - Materials & Liquid Glass...
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 备选或当前解决方案
+      description: 是否有其他替代方案或临时实现？

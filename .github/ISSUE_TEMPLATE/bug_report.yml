@@ -1,0 +1,64 @@
+name: 🐛 缺陷反馈 (Bug Report)
+description: 提交界面渲染异常、光学滤镜失真或跨浏览器兼容性缺陷
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢协助改进 Apple Liquid Glass Studio！请详细填写以下环境信息以便复现定位。
+
+  - type: dropdown
+    id: carrier
+    attributes:
+      label: 发生问题的组件载体 (Carrier)
+      options:
+        - 玻璃卡片 (Glass Card)
+        - 灵动岛 (Dynamic Island)
+        - macOS 鱼眼 Dock 栏
+        - Spotlight 聚焦搜索
+        - 液态分段选择器 (Segmented Control)
+        - 按钮套件 (Button Suite)
+        - Apple Music 动态微件
+        - 代码抽屉 (Code Accordion)
+        - 检查器侧栏 (Inspector Sidebar)
+        - 全局导航与弹窗
+    validations:
+      required: true
+
+  - type: dropdown
+    id: browser
+    attributes:
+      label: 运行浏览器环境 (Browser)
+      options:
+        - Safari (macOS / iOS)
+        - Chrome / Edge (Chromium 120+)
+        - Firefox
+        - 其他
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤 (Reproduction Steps)
+      placeholder: |
+        1. 切换至 XX 材质预设
+        2. 调整高斯模糊至 XX
+        3. 观察到界面出现 XX 现象
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 预期效果与实际表现 (Expected vs Actual)
+      placeholder: 描述符合 Apple HIG 规范的预期效果与当前界面的实际异常
+    validations:
+      required: true
+
+  - type: input
+    id: share_url
+    attributes:
+      label: 问题现场分享链接 (Share URL Hash)
+      placeholder: "e.g. #mat=prismatic&mode=A&blur=24&sat=180..."
