@@ -1,6 +1,12 @@
 # Apple Liquid Glass Studio (WWDC25 HIG)
 
 <p align="center">
+  <a href="README.md"><strong>简体中文</strong></a> •
+  <a href="README_EN.md">English</a> •
+  <a href="README_JA.md">日本語</a>
+</p>
+
+<p align="center">
   <img src="assets/screenshots/studio-overview.png" alt="Apple Liquid Glass Studio" width="100%" style="border-radius: 14px; box-shadow: 0 16px 40px rgba(0,0,0,0.5);">
 </p>
 
