@@ -963,6 +963,9 @@ const computedGlassStyle = computed(() => ({
       b.classList.toggle('active', isMatch);
       b.setAttribute('aria-selected', String(isMatch));
     });
+    document.querySelectorAll('.carrier-view').forEach((v) => v.classList.remove('active'));
+    const initialCarrierView = document.getElementById(`carrier-${state.carrier}`);
+    if (initialCarrierView) initialCarrierView.classList.add('active');
     document.querySelectorAll('.mode-btn').forEach((b) => {
       const isMatch = b.dataset.mode === state.engineMode;
       b.classList.toggle('active', isMatch);
