@@ -536,9 +536,16 @@ const computedGlassStyle = computed(() => ({
       glassTarget.classList.toggle('mode-dispersive', state.engineMode === 'C');
     }
 
-    // 2. Update Card Meta text
+    // 2. Update Card Meta text and Dynamic Metric
     if (cardMetaText) {
       cardMetaText.textContent = `Blur ${state.blur}px · Sat ${state.saturate}%`;
+    }
+    const progressFill = document.querySelector('.card-progress-fill');
+    if (progressFill) {
+      const transmission = Math.max(15, Math.min(99, Math.round(100 - state.fillAlpha * 0.8 - (state.blur - 4) * 0.8)));
+      progressFill.style.width = `${transmission}%`;
+      const metricVal = document.querySelector('.card-metric-value');
+      if (metricVal) metricVal.innerHTML = `${transmission}<span class="card-metric-unit">%</span>`;
     }
 
     // 3. Update Compass Dial needle

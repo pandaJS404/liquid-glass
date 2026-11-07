@@ -92,7 +92,6 @@
       </div>
       <div class="brand-title">
         <span>Liquid Glass Studio</span>
-        <span class="brand-badge">WWDC25 HIG</span>
       </div>
     </div>
 
@@ -128,7 +127,7 @@
           <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
           <path d="M3 3v5h5"></path>
         </svg>
-        <span>重置默认</span>
+        <span>重置</span>
       </button>
       <button type="button" class="header-btn" id="btn-doc" title="规范文档">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -136,14 +135,14 @@
           <line x1="12" y1="16" x2="12" y2="12"></line>
           <line x1="12" y1="8" x2="12.01" y2="8"></line>
         </svg>
-        <span>规范文档</span>
+        <span>技术规范</span>
       </button>
       <button type="button" class="header-btn primary" id="btn-share" title="分享配置">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
           <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
         </svg>
-        <span>分享配置</span>
+        <span>分享</span>
       </button>
       <a class="header-icon-btn" href="https://github.com/pandaJS404/liquid-glass" target="_blank" rel="noopener noreferrer" title="GitHub 仓库 (pandaJS404/liquid-glass)">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -166,8 +165,7 @@
       <div class="stage-tools-bar">
         <!-- Left: Refraction Engine Architecture Capsule -->
         <div class="stage-glass-pill stage-mode-capsule" role="radiogroup" aria-label="折射渲染架构">
-          <span class="stage-pill-label">折射架构</span>
-          <div class="mode-switch-group">
+                    <div class="mode-switch-group">
             <button type="button" class="mode-btn active" data-mode="A" title="Mode A 原生 DOM 三步调平">原生</button>
             <button type="button" class="mode-btn" data-mode="B" title="Mode B 真实透镜法线折射">透镜</button>
             <button type="button" class="mode-btn" data-mode="C" title="Mode C 3通道波长色散">色散</button>
@@ -187,8 +185,7 @@
         <!-- Right: Sun Compass & Pointer Glint Switch Capsule -->
         <div class="stage-glass-pill stage-lighting-capsule">
           <div class="compass-dock-item" title="按住拖拽或微调光照入射角">
-            <span class="stage-pill-label">光照</span>
-            <div class="compass-dial-mini" id="compass-dial">
+                        <div class="compass-dial-mini" id="compass-dial">
               <div class="compass-dial-needle" id="compass-needle"></div>
             </div>
           </div>
@@ -198,7 +195,7 @@
             <span class="stage-switch-track">
               <span class="stage-switch-thumb"></span>
             </span>
-            <span class="stage-switch-text">跟随光刃</span>
+            <span class="stage-switch-text">动态光刃</span>
           </label>
         </div>
       </div>
@@ -206,9 +203,13 @@
       <!-- Center Viewport Area (Where Carriers Live) -->
       <div class="stage-viewport-center" id="stage-viewport">
 
-        <!-- Optical Calibration Underlay (High-contrast typography & spectrum for authentic glass refraction) -->
+        <!-- Optical Calibration Underlay (High-contrast benchmark for glass refraction) -->
         <div class="stage-underlay-calibration" id="stage-underlay" aria-hidden="true">
-          <div class="underlay-headline">LIQUID GLASS</div>
+          <div class="underlay-grid-matrix">
+            <span class="grid-coord">X: 1280 · Y: 720</span>
+            <span class="grid-coord">OPTICAL MATRIX 1.0</span>
+          </div>
+          <div class="underlay-headline">REFRACTION</div>
           <div class="underlay-spectrum-bar">
             <span style="background:#ff375f"></span>
             <span style="background:#ff9f0a"></span>
@@ -217,7 +218,9 @@
             <span style="background:#2997ff"></span>
             <span style="background:#bf5af2"></span>
           </div>
-          <div class="underlay-subtitle">OPTICAL REFRACTION · WWDC25 HIG</div>
+          <div class="underlay-test-lines">
+            <div class="contrast-bar"><span class="c-blk"></span><span class="c-mid"></span><span class="c-wht"></span></div>
+          </div>
         </div>
 
         <div class="generator-stage-wrapper">
@@ -225,19 +228,49 @@
           <!-- Liquid Glass Master Carrier Host -->
           <div class="liquid-glass-master" id="glass-target">
 
-            <!-- Carrier 1: Master Glass Card -->
+            <!-- Carrier 1: Master Glass Card (Actionable Spatial Component) -->
             <div class="carrier-view view-card active" id="carrier-card">
-              <div class="card-header-meta">
-                <span class="card-pill-tag">APPLE LIQUID GLASS</span>
-                <span style="font-size: 11px; opacity: 0.85; font-variant-numeric: tabular-nums; letter-spacing: 0.03em;" id="card-meta-text">Blur 4px · Sat 140%</span>
+              <div class="card-glass-header">
+                <div class="card-app-badge">
+                  <div class="card-app-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                  </div>
+                  <div class="card-app-meta">
+                    <span class="card-app-name">Spatial Display</span>
+                    <span class="card-app-status">4K · 120Hz Ultra</span>
+                  </div>
+                </div>
+                <div class="card-live-pill">
+                  <span class="card-live-dot"></span>
+                  <span id="card-meta-text">Blur 4px · Sat 140%</span>
+                </div>
               </div>
-              <div class="card-center-body">
-                <h2 class="card-headline">Apple Liquid Glass</h2>
-                <p class="card-subline">三步调平滤波 · 零位移四层散射内阴影 · 锥形动态光刃</p>
+
+              <div class="card-glass-body">
+                <div class="card-metric-label">环境光透射率</div>
+                <div class="card-metric-value">96<span class="card-metric-unit">%</span></div>
+                <div class="card-progress-track">
+                  <div class="card-progress-fill" style="width: 84%;"></div>
+                </div>
               </div>
-              <div class="card-footer-meta">
-                <span>Zero Layout Shift</span>
-                <span>WWDC25 HIG Specification</span>
+
+              <div class="card-glass-footer">
+                <div class="card-quick-meta">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                    <path d="M2 12h20"></path>
+                  </svg>
+                  <span>空间折射网格</span>
+                </div>
+                <button type="button" class="card-action-btn">
+                  <span>实时渲染</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </button>
               </div>
             </div>
 
@@ -311,18 +344,18 @@
                       <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                       <polyline points="14 2 14 8 20 8"></polyline>
                     </svg>
-                    <span>Apple HIG Liquid Glass 官方规范</span>
+                    <span>Safari 浏览器</span>
                   </span>
-                  <span class="spotlight-item-type">文档</span>
+                  <span class="spotlight-item-type">应用程序</span>
                 </div>
                 <div class="spotlight-item">
                   <span class="spotlight-item-label">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
                     </svg>
-                    <span>Luminosity Re-leveling 三步调平算法</span>
+                    <span>系统设置</span>
                   </span>
-                  <span class="spotlight-item-type">算法</span>
+                  <span class="spotlight-item-type">偏好设置</span>
                 </div>
               </div>
             </div>
@@ -375,15 +408,15 @@
                 <polyline points="16 18 22 12 16 6"></polyline>
                 <polyline points="8 6 2 12 8 18"></polyline>
               </svg>
-              <span>样式代码</span>
+              <span>代码导出</span>
             </div>
 
             <!-- Format Tabs (CSS, Tailwind, React, Vue, Tokens) -->
             <div class="code-format-tabs" role="tablist" aria-label="代码格式选择">
-              <button type="button" class="format-tab-btn active" data-format="css" role="tab">CSS 原生</button>
-              <button type="button" class="format-tab-btn" data-format="tailwind" role="tab">Tailwind CSS</button>
-              <button type="button" class="format-tab-btn" data-format="react" role="tab">React JSX</button>
-              <button type="button" class="format-tab-btn" data-format="vue" role="tab">Vue 3</button>
+              <button type="button" class="format-tab-btn active" data-format="css" role="tab">CSS</button>
+              <button type="button" class="format-tab-btn" data-format="tailwind" role="tab">Tailwind</button>
+              <button type="button" class="format-tab-btn" data-format="react" role="tab">React</button>
+              <button type="button" class="format-tab-btn" data-format="vue" role="tab">Vue</button>
               <button type="button" class="format-tab-btn" data-format="tokens" role="tab">Tokens</button>
             </div>
           </div>
@@ -420,7 +453,7 @@
 
         <!-- Section 1: Official Material Presets -->
         <section class="sidebar-glass-card">
-          <div class="config-section-title">官方 6 大物理材质体系</div>
+          <div class="config-section-title">材质预设</div>
           <div class="preset-grid" role="radiogroup" aria-label="材质预设">
             <button type="button" class="preset-chip active" data-preset="clear" role="radio" aria-checked="true">
               <span class="preset-zh">Clear</span>
@@ -456,11 +489,11 @@
 
         <!-- Section 2: Luminosity Re-leveling -->
         <section class="sidebar-glass-card">
-          <div class="config-section-title">苹果三步调平滤波 (WWDC25 HIG)</div>
+          <div class="config-section-title">光学滤波</div>
           <div class="slider-group">
             <div class="slider-row">
               <div class="slider-label-row">
-                <span>高斯模糊散焦 (Blur)</span>
+                <span>模糊 (Blur)</span>
                 <span class="slider-val-badge" id="val-blur">4px</span>
               </div>
               <input type="range" class="control-range" id="sl-blur" min="4" max="64" step="1" value="4">
@@ -468,7 +501,7 @@
 
             <div class="slider-row">
               <div class="slider-label-row">
-                <span>微粒色彩饱和度 (Saturate)</span>
+                <span>饱和度 (Saturate)</span>
                 <span class="slider-val-badge" id="val-saturate">140%</span>
               </div>
               <input type="range" class="control-range" id="sl-saturate" min="100" max="250" step="5" value="140">
@@ -476,7 +509,7 @@
 
             <div class="slider-row">
               <div class="slider-label-row">
-                <span>暗部通透提亮 (Brightness)</span>
+                <span>亮度补偿 (Brightness)</span>
                 <span class="slider-val-badge" id="val-brightness">1.06</span>
               </div>
               <input type="range" class="control-range" id="sl-brightness" min="0.80" max="1.30" step="0.01" value="1.06">
@@ -484,7 +517,7 @@
 
             <div class="slider-row">
               <div class="slider-label-row">
-                <span>晶莹边缘反差 (Contrast)</span>
+                <span>边缘反差 (Contrast)</span>
                 <span class="slider-val-badge" id="val-contrast">1.08</span>
               </div>
               <input type="range" class="control-range" id="sl-contrast" min="0.90" max="1.25" step="0.01" value="1.08">
@@ -494,11 +527,11 @@
 
         <!-- Section 3: 4-Layer Inset Scatter Shadows -->
         <section class="sidebar-glass-card">
-          <div class="config-section-title">零位移四层物理内阴影</div>
+          <div class="config-section-title">光照与内阴影</div>
           <div class="slider-group">
             <div class="slider-row">
               <div class="slider-label-row">
-                <span>基底透光度 (Fill Alpha)</span>
+                <span>底板透明度 (Fill Alpha)</span>
                 <span class="slider-val-badge" id="val-fill-alpha">4%</span>
               </div>
               <input type="range" class="control-range" id="sl-fill-alpha" min="2" max="50" step="1" value="4">
@@ -506,7 +539,7 @@
 
             <div class="slider-row">
               <div class="slider-label-row">
-                <span>外沿倒角主光刃 (Specular Rim)</span>
+                <span>边缘光刃 (Specular Rim)</span>
                 <span class="slider-val-badge" id="val-rim-depth">1.8px</span>
               </div>
               <input type="range" class="control-range" id="sl-rim-depth" min="0.5" max="4.0" step="0.1" value="1.8">
@@ -514,7 +547,7 @@
 
             <div class="slider-row">
               <div class="slider-label-row">
-                <span>深层体折射流光 (Deep Volume)</span>
+                <span>深层折射 (Deep Volume)</span>
                 <span class="slider-val-badge" id="val-deep-bloom">18px</span>
               </div>
               <input type="range" class="control-range" id="sl-deep-bloom" min="10" max="70" step="2" value="18">
@@ -522,7 +555,7 @@
 
             <div class="slider-row">
               <div class="slider-label-row">
-                <span>入射光源角 (Light Angle)</span>
+                <span>光源角度 (Light Angle)</span>
                 <span class="slider-val-badge" id="val-light-angle">145°</span>
               </div>
               <input type="range" class="control-range" id="sl-light-angle" min="0" max="360" step="1" value="145">
@@ -530,7 +563,7 @@
 
             <div class="slider-row">
               <div class="slider-label-row">
-                <span>高光扩散角 (Conic Spread)</span>
+                <span>扩散角度 (Conic Spread)</span>
                 <span class="slider-val-badge" id="val-conic-spread">60°</span>
               </div>
               <input type="range" class="control-range" id="sl-conic-spread" min="20" max="120" step="5" value="60">
@@ -540,11 +573,11 @@
 
         <!-- Section 4: Dimensions & Squircle -->
         <section class="sidebar-glass-card">
-          <div class="config-section-title">几何与平滑圆角</div>
+          <div class="config-section-title">几何尺寸</div>
           <div class="slider-group">
             <div class="slider-row">
               <div class="slider-label-row">
-                <span>Apple 仿生平滑圆角 (Squircle)</span>
+                <span>平滑圆角 (Squircle Radius)</span>
                 <span class="slider-val-badge" id="val-squircle-radius">28px</span>
               </div>
               <input type="range" class="control-range" id="sl-squircle-radius" min="8" max="64" step="1" value="28">
@@ -567,7 +600,7 @@
 
         <!-- Section 5: Accessibility Simulation -->
         <section class="sidebar-glass-card">
-          <div class="config-section-title">无障碍与边界仿真 (WCAG 2.2)</div>
+          <div class="config-section-title">无障碍模拟</div>
           <div class="a11y-toggles-row">
             <label class="toggle-label">
               <span>Reduce Transparency (减少透明度)</span>

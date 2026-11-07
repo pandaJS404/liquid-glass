@@ -599,6 +599,33 @@ input:focus-visible,
   color: rgba(255, 255, 255, 0.75);
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
 }
+.underlay-grid-matrix {
+  display: flex;
+  gap: 24px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+}
+.underlay-test-lines {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4px;
+}
+.contrast-bar {
+  display: flex;
+  width: 240px;
+  height: 4px;
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+.contrast-bar .c-blk { flex: 1; background: #000000; }
+.contrast-bar .c-mid { flex: 1; background: #888888; }
+.contrast-bar .c-wht { flex: 1; background: #ffffff; }
 
 .generator-stage-wrapper {
   position: relative;
@@ -719,50 +746,160 @@ input:focus-visible,
   display: flex;
 }
 
-/* 1. Glass Card View */
+/* 1. Glass Card View - Apple Spatial Display / System Component */
 .view-card {
   flex-direction: column;
   justify-content: space-between;
-  padding: 34px 32px;
+  padding: 28px 30px;
 }
-.card-header-meta {
+.card-glass-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
-.card-pill-tag {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  color: var(--accent-cyan);
-  padding: 4px 10px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+.card-app-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
-.card-center-body {
-  text-align: center;
-  margin: auto 0;
-}
-.card-headline {
-  font-size: 26px;
-  font-weight: 800;
-  letter-spacing: -0.4px;
+.card-app-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.35);
   color: #ffffff;
-  margin-bottom: 8px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
-.card-subline {
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.82);
-  line-height: 1.6;
-}
-.card-footer-meta {
+.card-app-meta {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+}
+.card-app-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.2px;
+}
+.card-app-status {
   font-size: 11px;
   color: rgba(255, 255, 255, 0.65);
-  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+.card-live-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.9);
+  font-variant-numeric: tabular-nums;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.card-live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #30d158;
+  box-shadow: 0 0 8px rgba(48, 209, 88, 0.8);
+  animation: pulse-dot 2s infinite ease-in-out;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(0.85); }
+}
+
+.card-glass-body {
+  margin: auto 0;
+  width: 100%;
+  text-align: left;
+}
+.card-metric-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+  margin-bottom: 8px;
+}
+.card-metric-value {
+  font-size: 44px;
+  font-weight: 800;
+  letter-spacing: -1.5px;
+  line-height: 1;
+  color: #ffffff;
+  margin-bottom: 16px;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.25);
+}
+.card-metric-unit {
+  font-size: 22px;
+  font-weight: 500;
+  opacity: 0.75;
+  margin-left: 4px;
+}
+.card-progress-track {
+  width: 100%;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+.card-progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #38bdf8 0%, #a855f7 100%);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+  transition: width 0.3s ease;
+}
+
+.card-glass-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.card-quick-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+}
+.card-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+.card-action-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+.card-action-btn:active {
+  transform: translateY(0);
 }
 
 /* 2. Dynamic Island View */
