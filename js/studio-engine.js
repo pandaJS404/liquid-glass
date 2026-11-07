@@ -17,15 +17,15 @@
     preset: 'clear', // 'clear' | 'prismatic' | 'satin' | 'tinted' | 'obsidian' | 'gel'
 
     // 3-Step Luminosity Re-leveling (WWDC25 HIG)
-    blur: 4,
-    saturate: 140,
+    blur: 3,
+    saturate: 145,
     brightness: 1.06,
-    contrast: 1.08,
+    contrast: 1.10,
 
     // 4-Layer Inset Scatter Shadows (Zero Layout Shift)
     fillAlpha: 4,
-    rimDepth: 1.8,
-    deepBloom: 18,
+    rimDepth: 2.0,
+    deepBloom: 24,
     lightAngle: 145,
     conicSpread: 60,
 
@@ -49,13 +49,13 @@
     prismatic: {
       nameZh: 'Prismatic 棱镜',
       desc: '重折射厚棱镜，高反差光刃',
-      blur: 16,
-      saturate: 180,
+      blur: 6,
+      saturate: 175,
       brightness: 1.06,
-      contrast: 1.06,
-      fillAlpha: 8,
-      rimDepth: 1.6,
-      deepBloom: 32,
+      contrast: 1.12,
+      fillAlpha: 6,
+      rimDepth: 2.2,
+      deepBloom: 36,
       squircleRadius: 28
     },
     satin: {
@@ -73,13 +73,13 @@
     clear: {
       nameZh: 'Clear 纯透',
       desc: '超透纯净水晶透镜，极高通透感',
-      blur: 4,
-      saturate: 140,
+      blur: 3,
+      saturate: 145,
       brightness: 1.06,
-      contrast: 1.08,
+      contrast: 1.10,
       fillAlpha: 4,
-      rimDepth: 1.8,
-      deepBloom: 18,
+      rimDepth: 2.0,
+      deepBloom: 24,
       squircleRadius: 32
     },
     tinted: {
@@ -225,11 +225,11 @@
     const oppX = -offX;
     const oppY = -offY;
 
-    const layer1 = `inset ${offX}px ${offY}px 2px 0 rgba(255, 255, 255, 0.75)`;
-    const layer2 = `inset ${oppX}px ${oppY}px 2px 0 rgba(255, 255, 255, 0.15)`;
-    const layer3 = `inset 0 0 10px 2px rgba(255, 255, 255, 0.18)`;
-    const layer4 = `inset 0 0 ${state.deepBloom}px 4px rgba(255, 255, 255, 0.08)`;
-    const layer5 = `0 24px 50px -12px rgba(0, 0, 0, 0.65)`;
+    const layer1 = `inset ${offX}px ${offY}px 3px 0 rgba(255, 255, 255, 0.95)`;
+    const layer2 = `inset ${oppX}px ${oppY}px 3px 0 rgba(255, 255, 255, 0.28)`;
+    const layer3 = `inset 0 0 20px 4px rgba(255, 255, 255, 0.20)`;
+    const layer4 = `inset 0 0 ${state.deepBloom}px 6px rgba(255, 255, 255, 0.12)`;
+    const layer5 = `0 32px 64px -14px rgba(0, 0, 0, 0.72)`;
 
     const boxShadow = `${layer1},\n    ${layer2},\n    ${layer3},\n    ${layer4},\n    ${layer5}`;
 
@@ -478,6 +478,192 @@ const computedGlassStyle = computed(() => ({
     }
   }
 
+
+  // =========================================================================
+  // Real SVG Optical Displacement & Chromatic Aberration Pipeline
+  // =========================================================================
+  let svgDefsContainer = null;
+  function getSvgDefs() {
+    if (!svgDefsContainer) {
+      svgDefsContainer = document.getElementById('liquid-glass-svg-defs');
+    }
+    return svgDefsContainer;
+  }
+
+  function clampVal(val, min, max) {
+    return Math.min(Math.max(val, min), max);
+  }
+
+  function buildDisplacementMap(width, height, radius, rimWidth, curvaturePower = 2.2) {
+    const canvas = document.createElement('canvas');
+    const w = Math.max(8, Math.round(width));
+    const h = Math.max(8, Math.round(height));
+    canvas.width = w;
+    canvas.height = h;
+
+    const ctx = canvas.getContext('2d');
+    const imgData = ctx.createImageData(w, h);
+    const data = imgData.data;
+
+    const halfW = w / 2;
+    const halfH = h / 2;
+    const r = Math.min(radius, halfW, halfH);
+    const innerW = halfW - r;
+    const innerH = halfH - r;
+    const rim = Math.max(6, rimWidth);
+
+    for (let y = 0; y < h; y++) {
+      for (let x = 0; x < w; x++) {
+        const dx = x + 0.5 - halfW;
+        const dy = y + 0.5 - halfH;
+        const sx = Math.sign(dx) || 1;
+        const sy = Math.sign(dy) || 1;
+
+        const qx = Math.abs(dx) - innerW;
+        const qy = Math.abs(dy) - innerH;
+        const ox = Math.max(qx, 0);
+        const oy = Math.max(qy, 0);
+
+        const dist = r - (Math.hypot(ox, oy) + Math.min(Math.max(qx, qy), 0));
+
+        let nx = 0, ny = 0;
+        if (qx > 0 && qy > 0) {
+          const len = Math.hypot(qx, qy) || 1;
+          nx = (sx * qx) / len;
+          ny = (sy * qy) / len;
+        } else if (qx > qy) {
+          nx = sx;
+          ny = 0;
+        } else {
+          nx = 0;
+          ny = sy;
+        }
+
+        let t = 1 - clampVal(dist / rim, 0, 1);
+        t = Math.pow(t, curvaturePower);
+
+        const idx = (y * w + x) * 4;
+        data[idx]     = Math.round(128 - nx * 127 * t);
+        data[idx + 1] = Math.round(128 - ny * 127 * t);
+        data[idx + 2] = 128;
+        data[idx + 3] = 255;
+      }
+    }
+
+    ctx.putImageData(imgData, 0, 0);
+    return canvas.toDataURL('image/png');
+  }
+
+  function updateSvgLensFilter(width, height, radius) {
+    const container = getSvgDefs();
+    if (!container) return null;
+
+    const filterId = 'studio-optical-lens-filter';
+    let filterEl = document.getElementById(filterId);
+    if (!filterEl) {
+      filterEl = document.createElementNS('http://www.w3.org/2000/svg', 'filter');
+      filterEl.id = filterId;
+      filterEl.setAttribute('x', '0');
+      filterEl.setAttribute('y', '0');
+      filterEl.setAttribute('width', '100%');
+      filterEl.setAttribute('height', '100%');
+      filterEl.setAttribute('color-interpolation-filters', 'sRGB');
+      container.appendChild(filterEl);
+    }
+
+    const rim = Math.max(12, Math.min(height * 0.45, 38));
+    const mapUri = buildDisplacementMap(width, height, radius, rim);
+
+    let scale = 36;
+    let dispersion = 0;
+    if (state.engineMode === 'B') {
+      scale = 36;
+      dispersion = 0.08;
+    } else if (state.engineMode === 'C') {
+      scale = 44;
+      dispersion = 0.42;
+    }
+
+    const scaleR = (scale * (1 + dispersion)).toFixed(1);
+    const scaleG = scale.toFixed(1);
+    const scaleB = (scale * (1 - dispersion)).toFixed(1);
+    const stdDev = Math.max(0, state.blur * 0.25).toFixed(1);
+    const satVal = (state.saturate / 100).toFixed(2);
+
+    filterEl.innerHTML = `
+      <feImage href="${mapUri}" xlink:href="${mapUri}" result="dispMap" width="${width}" height="${height}" preserveAspectRatio="none" />
+      <feDisplacementMap in="SourceGraphic" in2="dispMap" xChannelSelector="R" yChannelSelector="G" scale="${scaleR}" result="displacedR" />
+      <feDisplacementMap in="SourceGraphic" in2="dispMap" xChannelSelector="R" yChannelSelector="G" scale="${scaleG}" result="displacedG" />
+      <feDisplacementMap in="SourceGraphic" in2="dispMap" xChannelSelector="R" yChannelSelector="G" scale="${scaleB}" result="displacedB" />
+      <feColorMatrix in="displacedR" type="matrix" result="colorR" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" />
+      <feColorMatrix in="displacedG" type="matrix" result="colorG" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" />
+      <feColorMatrix in="displacedB" type="matrix" result="colorB" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" />
+      <feComposite in="colorR" in2="colorG" operator="arithmetic" k2="1" k3="1" result="colorRG" />
+      <feComposite in="colorRG" in2="colorB" operator="arithmetic" k2="1" k3="1" result="chromaCombined" />
+      <feGaussianBlur in="chromaCombined" stdDeviation="${stdDev}" result="polished" />
+      <feColorMatrix in="polished" type="saturate" values="${satVal}" />
+    `;
+
+    return `url(#${filterId})`;
+  }
+
+  // =========================================================================
+  // Interactive Smooth Dragging across Stage (Like sandbox-section)
+  // =========================================================================
+  let isDraggingCard = false;
+  let dragStartX = 0, dragStartY = 0;
+  let currentCardX = 0, currentCardY = 0;
+
+  function initDraggableCard() {
+    if (!glassTarget) return;
+
+    glassTarget.addEventListener('pointerdown', (e) => {
+      if (e.target.closest('button, input, a, select, textarea, .no-drag')) return;
+
+      isDraggingCard = true;
+      dragStartX = e.clientX - currentCardX;
+      dragStartY = e.clientY - currentCardY;
+      glassTarget.classList.add('is-dragging');
+      glassTarget.setPointerCapture(e.pointerId);
+    });
+
+    glassTarget.addEventListener('pointermove', (e) => {
+      if (!isDraggingCard) return;
+
+      const newX = e.clientX - dragStartX;
+      const newY = e.clientY - dragStartY;
+
+      currentCardX = Math.max(-420, Math.min(420, newX));
+      currentCardY = Math.max(-260, Math.min(260, newY));
+
+      glassTarget.style.transform = `translate3d(${currentCardX}px, ${currentCardY}px, 0)`;
+    });
+
+    const endDrag = (e) => {
+      if (!isDraggingCard) return;
+      isDraggingCard = false;
+      glassTarget.classList.remove('is-dragging');
+      try {
+        glassTarget.releasePointerCapture(e.pointerId);
+      } catch (err) {}
+    };
+
+    glassTarget.addEventListener('pointerup', endDrag);
+    glassTarget.addEventListener('pointercancel', endDrag);
+
+    glassTarget.addEventListener('dblclick', (e) => {
+      if (e.target.closest('button, input, a')) return;
+      currentCardX = 0;
+      currentCardY = 0;
+      glassTarget.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
+      glassTarget.style.transform = `translate3d(0, 0, 0)`;
+      setTimeout(() => {
+        glassTarget.style.transition = '';
+      }, 400);
+      showToast('玻璃已复位至中心');
+    });
+  }
+
   // =========================================================================
   // Master Render Loop
   // =========================================================================
@@ -525,9 +711,27 @@ const computedGlassStyle = computed(() => ({
         glassTarget.style.borderRadius = '26px';
       }
 
-      glassTarget.style.background = optics.baseColor;
-      glassTarget.style.webkitBackdropFilter = optics.backdropFilter;
-      glassTarget.style.backdropFilter = optics.backdropFilter;
+      // Sheen gradient + base tint gives crystal clarity
+      glassTarget.style.background = `linear-gradient(${state.lightAngle}deg, rgba(255, 255, 255, 0.38) 0%, transparent 24%), ${optics.baseColor}`;
+      
+      // Mode B & C: Real SVG Optical Displacement & Chromatic Aberration
+      if (state.engineMode === 'B' || state.engineMode === 'C') {
+        const rect = glassTarget.getBoundingClientRect();
+        const radNum = parseFloat(optics.squircleRadius) || 28;
+        const w = rect.width || state.cardWidth;
+        const h = rect.height || state.cardHeight;
+        const filterUrl = updateSvgLensFilter(w, h, radNum);
+        if (filterUrl) {
+          glassTarget.style.webkitBackdropFilter = `${filterUrl} ${optics.backdropFilter}`;
+          glassTarget.style.backdropFilter = `${filterUrl} ${optics.backdropFilter}`;
+        } else {
+          glassTarget.style.webkitBackdropFilter = optics.backdropFilter;
+          glassTarget.style.backdropFilter = optics.backdropFilter;
+        }
+      } else {
+        glassTarget.style.webkitBackdropFilter = optics.backdropFilter;
+        glassTarget.style.backdropFilter = optics.backdropFilter;
+      }
       glassTarget.style.boxShadow = optics.boxShadow;
       glassTarget.style.setProperty('--light-angle', `${state.lightAngle}deg`);
       glassTarget.style.setProperty('--lg-light-angle', `${state.lightAngle}deg`);
@@ -845,6 +1049,8 @@ const computedGlassStyle = computed(() => ({
         state.pointerTrack = chkPointerTrack.checked;
       });
     }
+
+    initDraggableCard();
 
     // 8. Bind Sliders
     if (sliders.blur) sliders.blur.addEventListener('input', (e) => { state.blur = parseInt(e.target.value, 10); render(); });

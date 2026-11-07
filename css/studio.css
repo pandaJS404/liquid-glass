@@ -652,7 +652,7 @@ input:focus-visible,
     inset 0 0 var(--lg-scatter-radius) 2px rgba(255, 255, 255, var(--lg-scatter-opacity)),
     inset 0 0 var(--lg-bloom-radius) 4px rgba(255, 255, 255, var(--lg-bloom-opacity)),
     0 var(--lg-drop-y) var(--lg-drop-blur) -12px rgba(0, 0, 0, 0.65);
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  border: none !important;
   transition: box-shadow 0.15s ease, border-radius 0.2s cubic-bezier(0.16, 1, 0.3, 1), width 0.25s cubic-bezier(0.16, 1, 0.3, 1), height 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   overflow: visible; /* Prevent clipping child hover states / dock fisheye magnification */
   transform-style: preserve-3d;
@@ -2354,3 +2354,37 @@ input[type="range"].control-range::-webkit-slider-thumb:hover {
   }
 }
 
+
+.liquid-glass-master {
+  cursor: grab;
+  touch-action: none;
+}
+.liquid-glass-master.is-dragging {
+  cursor: grabbing !important;
+  user-select: none;
+}
+.underlay-headline {
+  font-size: clamp(48px, 7vw, 92px);
+  font-weight: 900;
+  letter-spacing: -1.5px;
+  line-height: 0.95;
+  color: #ffffff;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+}
+.underlay-spectrum-bar {
+  display: flex;
+  width: 480px;
+  max-width: 90%;
+  height: 12px;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+}
+.underlay-desc {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  color: rgba(255, 255, 255, 0.75);
+  text-transform: uppercase;
+}
