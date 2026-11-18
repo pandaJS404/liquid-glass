@@ -313,6 +313,36 @@ input:focus-visible,
   transition: background 0.35s ease;
 }
 
+/* 高对比文字底图：透镜折射的锐利内容来源（通透感的关键） */
+.stage-backdrop-words {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 360px; /* 让出右侧侧栏，文字居中于舞台区 */
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  user-select: none;
+}
+.words-en {
+  font-size: clamp(96px, 15vw, 230px);
+  font-weight: 900;
+  letter-spacing: -0.045em;
+  line-height: 0.9;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+.words-cn {
+  font-size: clamp(18px, 3vw, 44px);
+  font-weight: 800;
+  letter-spacing: 0.5em;
+  margin-top: 14px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
 /* Stage Canvas Area */
 .stage-container {
   position: relative;
@@ -641,6 +671,10 @@ input:focus-visible,
 .liquid-glass-master {
   position: relative;
   border-radius: var(--lg-radius);
+  /* 文本环境遮蔽防护 (Ambient Occlusion Shield)：
+     text-shadow 可继承，统一为玻璃载体内所有文字提供深色遮蔽，
+     防止通透材质折射高亮背景时文字眩光难读 */
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
   background:
     linear-gradient(var(--lg-light-angle, 145deg), rgba(255, 255, 255, 0.32) 0%, transparent 26%),
     var(--lg-fill);
@@ -791,7 +825,7 @@ input:focus-visible,
 }
 .card-app-status {
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(255, 255, 255, 0.78);
   font-variant-numeric: tabular-nums;
 }
 .card-live-pill {
@@ -841,7 +875,7 @@ input:focus-visible,
   line-height: 1;
   color: #ffffff;
   margin-bottom: 16px;
-  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.25);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5), 0 2px 14px rgba(0, 0, 0, 0.3);
 }
 .card-metric-unit {
   font-size: 22px;
@@ -1849,6 +1883,30 @@ input[type="range"].control-range::-webkit-slider-thumb:hover {
   transition: none !important;
 }
 
+/* WCAG 2.2 自动降级：跟随操作系统"减弱透明度 / 减弱动态效果"设置自动触发
+   （选择器与手动测试类 .test-reduce-transparency 保持一致） */
+@media (prefers-reduced-transparency: reduce) {
+  .liquid-glass-master,
+  .code-accordion-panel,
+  .generator-sidebar,
+  .site-header {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    background: #181b26 !important;
+    border-color: rgba(255, 255, 255, 0.35) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
 /* =========================================================================
    Apple HIG Responsive Design & Multi-screen Optimizations
    ========================================================================= */
@@ -1954,6 +2012,10 @@ input[type="range"].control-range::-webkit-slider-thumb:hover {
     height: auto;
     overflow-y: visible;
     padding: 24px 18px 60px 18px;
+  }
+
+  .stage-backdrop-words {
+    right: 0; /* 纵向堆叠布局下无需让出侧栏 */
   }
 
   .preset-grid {

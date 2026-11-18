@@ -6,12 +6,24 @@
 (function () {
   'use strict';
 
+  // 0. Chromium SVG 折射能力检测（与主站 liquid-glass-engine 一致）
+  //    支持时默认启用 Mode B 真实透镜折射，否则回退 Mode A 纯 CSS 磨砂
+  const supportsSvgRefraction = (() => {
+    try {
+      const isChromeUA = /Chrome|Chromium|Edg|Electron/.test(navigator.userAgent);
+      const isSafariUA = /Safari/.test(navigator.userAgent) && /Version\//.test(navigator.userAgent);
+      return CSS.supports && CSS.supports('backdrop-filter', 'url(#test)') && isChromeUA && !isSafariUA;
+    } catch (e) {
+      return false;
+    }
+  })();
+
   // 1. Studio State
   const state = {
     // Carrier & Engine Mode
     carrier: 'card', // 'card' | 'island' | 'dock' | 'spotlight' | 'segmented' | 'buttons' | 'music'
-    engineMode: 'A', // 'A' (DOM Native) | 'B' (Floated Lens) | 'C' (GPU Dispersive)
-    wallpaper: 'aurora-pink',
+    engineMode: supportsSvgRefraction ? 'B' : 'A', // 'A' (DOM Native) | 'B' (Floated Lens) | 'C' (GPU Dispersive)
+    wallpaper: 'typography',
 
     // Material Preset
     preset: 'clear', // 'clear' | 'prismatic' | 'satin' | 'tinted' | 'obsidian' | 'gel'
@@ -122,6 +134,7 @@
 
   // Wallpapers
   const WALLPAPERS = {
+    'typography': 'radial-gradient(circle at 42% 44%, rgba(64, 70, 105, 0.5) 0%, transparent 62%), #0a0c14',
     'aurora-pink': 'radial-gradient(circle at 22% 28%, #ec4899 0%, #3b82f6 45%, transparent 72%), radial-gradient(circle at 88% 55%, #8b5cf6 0%, #ec4899 35%, transparent 68%), #090c16',
     'ocean-blue': 'radial-gradient(circle at 20% 30%, #06b6d4 0%, #2563eb 48%, transparent 75%), radial-gradient(circle at 88% 45%, #3b82f6 0%, #0284c7 40%, transparent 65%), #05070e',
     'sunset-amber': 'radial-gradient(circle at 22% 30%, #f43f5e 0%, #fb923c 48%, transparent 75%), radial-gradient(circle at 88% 50%, #f97316 0%, #e11d48 40%, transparent 68%), #0c0807',
@@ -129,6 +142,14 @@
     'dark-minimal': 'radial-gradient(circle at 85% 35%, rgba(255,255,255,0.06) 0%, transparent 55%), #090b10',
     'mesh-organic': 'radial-gradient(circle at 22% 30%, #2563eb 0%, #0d9488 48%, transparent 75%), radial-gradient(circle at 88% 55%, #14b8a6 0%, #6366f1 40%, transparent 68%), #070a10'
   };
+
+  // 应用壁纸：平滑渐变底图 或 高对比文字层（文字层为透镜提供可折射的锐利内容）
+  function applyWallpaper(key) {
+    if (!stageBackdrop || !WALLPAPERS[key]) return;
+    stageBackdrop.style.background = WALLPAPERS[key];
+    const words = stageBackdrop.querySelector('.stage-backdrop-words');
+    if (words) words.style.display = key === 'typography' ? 'flex' : 'none';
+  }
 
   // DOM Elements references
   let stageBackdrop = null;
@@ -494,6 +515,24 @@ const computedGlassStyle = computed(() => ({
     return Math.min(Math.max(val, min), max);
   }
 
+  // 位移贴图缓存：以几何参数（宽|高|圆角|rim）为 key。
+  // blur/饱和度/光角等滑杆不改变 SDF 贴图，缓存可避免每次 input
+  // 事件都重跑逐像素循环与 PNG 编码（约 10~20ms/次）。
+  const dispMapCache = new Map();
+  function getDisplacementMapCached(width, height, radius, rim) {
+    const key = `${width}|${height}|${radius}|${rim}`;
+    let uri = dispMapCache.get(key);
+    if (!uri) {
+      uri = buildDisplacementMap(width, height, radius, rim);
+      dispMapCache.set(key, uri);
+      // 几何连续变化时限制内存占用：超出 24 条淘汰最旧条目
+      if (dispMapCache.size > 24) {
+        dispMapCache.delete(dispMapCache.keys().next().value);
+      }
+    }
+    return uri;
+  }
+
   function buildDisplacementMap(width, height, radius, rimWidth, curvaturePower = 2.2) {
     const canvas = document.createElement('canvas');
     const w = Math.max(8, Math.round(width));
@@ -572,13 +611,13 @@ const computedGlassStyle = computed(() => ({
     }
 
     const rim = Math.max(12, Math.min(height * 0.45, 38));
-    const mapUri = buildDisplacementMap(width, height, radius, rim);
+    const mapUri = getDisplacementMapCached(width, height, radius, rim);
 
     let scale = 36;
     let dispersion = 0;
     if (state.engineMode === 'B') {
       scale = 36;
-      dispersion = 0.08;
+      dispersion = 0.2;
     } else if (state.engineMode === 'C') {
       scale = 44;
       dispersion = 0.42;
@@ -912,9 +951,7 @@ const computedGlassStyle = computed(() => ({
   function init() {
     // 1. Gather Elements
     stageBackdrop = document.getElementById('stage-backdrop');
-    if (stageBackdrop && WALLPAPERS[state.wallpaper]) {
-      stageBackdrop.style.background = WALLPAPERS[state.wallpaper];
-    }
+    applyWallpaper(state.wallpaper);
     glassTarget = document.getElementById('glass-target');
     cardMetaText = document.getElementById('card-meta-text');
     compassDial = document.getElementById('compass-dial');
@@ -1038,9 +1075,7 @@ const computedGlassStyle = computed(() => ({
         btn.classList.add('active');
         const wallKey = btn.dataset.wall;
         state.wallpaper = wallKey;
-        if (stageBackdrop && WALLPAPERS[wallKey]) {
-          stageBackdrop.style.background = WALLPAPERS[wallKey];
-        }
+        applyWallpaper(wallKey);
       });
     });
 
@@ -1157,7 +1192,7 @@ const computedGlassStyle = computed(() => ({
         state.cardWidth = 480;
         state.cardHeight = 320;
         state.lightAngle = 145;
-        state.engineMode = 'A';
+        state.engineMode = supportsSvgRefraction ? 'B' : 'A';
         state.reduceTransparency = false;
         state.reduceMotion = false;
         if (chkTrans) chkTrans.checked = false;
@@ -1290,8 +1325,14 @@ const computedGlassStyle = computed(() => ({
     initCompassDial();
 
     // 18. Window Resize Listener for Responsive Tuning
+    //     rAF 防抖：避免拖拽窗口过程中连续全量重建滤镜
+    let resizeRaf = 0;
     window.addEventListener('resize', () => {
-      render();
+      if (resizeRaf) cancelAnimationFrame(resizeRaf);
+      resizeRaf = requestAnimationFrame(() => {
+        resizeRaf = 0;
+        render();
+      });
     });
 
     // 19. Initial Render

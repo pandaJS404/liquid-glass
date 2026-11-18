@@ -156,7 +156,13 @@
   <main class="app-workspace">
 
     <!-- Master Dynamic Backdrop Canvas (Flows across Stage & Sidebar) -->
-    <div class="stage-backdrop-canvas" id="stage-backdrop"></div>
+    <div class="stage-backdrop-canvas" id="stage-backdrop">
+      <!-- 高对比文字底图：为透镜提供可折射的锐利内容（仅 typography 壁纸显示） -->
+      <div class="stage-backdrop-words" aria-hidden="true">
+        <span class="words-en">Studio</span>
+        <span class="words-cn">液 态 玻 璃</span>
+      </div>
+    </div>
 
     <!-- Left: Optical Canvas & Component Stage -->
     <section class="stage-container" id="stage-container">
@@ -174,7 +180,8 @@
 
         <!-- Center: Wallpaper Palette Swatches -->
         <div class="stage-glass-pill wallpaper-pills" role="group" aria-label="底图壁纸切换">
-          <button type="button" class="wp-circle-dot active" data-wall="aurora-pink" title="极光粉紫" style="background: radial-gradient(circle at 30% 30%, #ec4899, #3b82f6 60%, #1e1b4b);"></button>
+          <button type="button" class="wp-circle-dot active" data-wall="typography" title="高对比文字（通透折射推荐）" style="background: linear-gradient(180deg, #0a0c14 24%, #e8eaef 24%, #e8eaef 38%, #0a0c14 38%, #0a0c14 62%, #e8eaef 62%, #e8eaef 76%, #0a0c14 76%);"></button>
+          <button type="button" class="wp-circle-dot" data-wall="aurora-pink" title="极光粉紫" style="background: radial-gradient(circle at 30% 30%, #ec4899, #3b82f6 60%, #1e1b4b);"></button>
           <button type="button" class="wp-circle-dot" data-wall="ocean-blue" title="加州海岸" style="background: radial-gradient(circle at 70% 30%, #06b6d4, #1d4ed8 70%, #030712);"></button>
           <button type="button" class="wp-circle-dot" data-wall="sunset-amber" title="优胜美地日落" style="background: linear-gradient(135deg, #f43f5e, #fb923c 60%, #451a03);"></button>
           <button type="button" class="wp-circle-dot" data-wall="cyber-neon" title="赛博霓虹" style="background: radial-gradient(circle at 50% 40%, #d946ef, #6366f1 50%, #000);"></button>
